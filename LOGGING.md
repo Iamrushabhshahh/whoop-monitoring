@@ -79,7 +79,12 @@ SELECT histogram(_timestamp, '1 day') AS d, stream, SUM(CAST(rows AS BIGINT)) FR
 WHERE body = 'sink.write.completed' GROUP BY d, stream
 ```
 
-From a log line, click the `trace_id` to open the trace of that run.
+From a log line, expand it, pick trace stream **`whoopmon_app`** in the dropdown, and click
+**View Trace**. The dropdown defaults to the first trace stream alphabetically (e.g.
+`claude_code`), not the matching one, so check it each time.
+
+Turn **More → Quick Mode** off in the Logs page. Quick Mode fetches only the visible columns, so
+`trace_id` is missing and the View Trace button does not appear.
 
 ## Metrics (OTLP → OpenObserve metrics)
 

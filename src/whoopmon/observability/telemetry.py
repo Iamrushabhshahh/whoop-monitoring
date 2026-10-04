@@ -18,6 +18,8 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from whoopmon import __version__
 from whoopmon.config import Settings
 
+# Logs and traces share one stream name, so the collector's traces are easy to find
+# (trace stream "whoopmon_app") instead of mixing into the shared "default" stream.
 APP_LOG_STREAM = "whoopmon_app"
 
 _providers: list[TracerProvider | MeterProvider | LoggerProvider] = []
@@ -43,7 +45,11 @@ def setup_telemetry(settings: Settings) -> logging.Handler | None:
 
     tracer_provider = TracerProvider(resource=resource)
     tracer_provider.add_span_processor(
-        BatchSpanProcessor(OTLPSpanExporter(endpoint=f"{base}/traces", headers=headers))
+        BatchSpanProcessor(
+            OTLPSpanExporter(
+                endpoint=f"{base}/traces", headers={**headers, "stream-name": APP_LOG_STREAM}
+            )
+        )
     )
     trace.set_tracer_provider(tracer_provider)
 
