@@ -1,0 +1,34 @@
+{
+  "name": "whoop_recovery_red",
+  "org_id": "default",
+  "description": "Recovery score is in the red zone (below 34 %). Take it easy today.",
+  "stream_type": "logs",
+  "stream_name": "whoop_recovery",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "sql": "SELECT local_date, score_recovery_score FROM \"whoop_recovery\" WHERE score_state = 'SCORED' AND score_recovery_score < 34",
+    "conditions": null,
+    "vrl_function": null
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 60,
+    "frequency_type": "minutes",
+    "silence": 720,
+    "cron": "",
+    "align_time": false
+  },
+  "destinations": [
+    "whoopmon_webhook"
+  ],
+  "enabled": true,
+  "tz_offset": 0,
+  "row_template": "",
+  "tags": [
+    "whoop"
+  ],
+  "creates_incident": false
+}

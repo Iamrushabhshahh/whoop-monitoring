@@ -1,0 +1,34 @@
+{
+  "name": "whoop_hrv_drop",
+  "org_id": "default",
+  "description": "Latest HRV is more than 20 % below the 7-day mean.",
+  "stream_type": "logs",
+  "stream_name": "whoop_recovery",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "sql": "SELECT MAX(CASE WHEN rk = 1 THEN hrv END) AS latest_hrv, AVG(hrv) AS mean_hrv FROM (SELECT score_hrv_rmssd_milli AS hrv, ROW_NUMBER() OVER (ORDER BY _timestamp DESC) AS rk FROM \"whoop_recovery\" WHERE score_state = 'SCORED') HAVING MAX(CASE WHEN rk = 1 THEN hrv END) < 0.8 * AVG(hrv)",
+    "conditions": null,
+    "vrl_function": null
+  },
+  "trigger_condition": {
+    "period": 10080,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 60,
+    "frequency_type": "minutes",
+    "silence": 1440,
+    "cron": "",
+    "align_time": false
+  },
+  "destinations": [
+    "whoopmon_webhook"
+  ],
+  "enabled": true,
+  "tz_offset": 0,
+  "row_template": "",
+  "tags": [
+    "whoop"
+  ],
+  "creates_incident": false
+}

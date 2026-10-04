@@ -1,0 +1,1 @@
+"""Record flattening for OpenObserve."""

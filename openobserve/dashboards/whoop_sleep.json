@@ -1,0 +1,1138 @@
+{
+  "version": 5,
+  "dashboardId": "whoop_sleep",
+  "title": "WHOOP \u00b7 Sleep",
+  "description": "Sleep stages, performance, need vs actual and respiratory rate. Naps are excluded unless stated.",
+  "role": "",
+  "owner": "",
+  "created": "2026-10-04T20:30:48Z",
+  "tabs": [
+    {
+      "tabId": "default",
+      "name": "Default",
+      "panels": [
+        {
+          "id": "Panel_ID0001",
+          "type": "metric",
+          "title": "Avg sleep (h)",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 1,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "h"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT AVG(score_stage_summary_total_in_bed_time_hours - score_stage_summary_total_awake_time_hours) AS y FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_sleep\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED' AND nap = false)",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_sleep",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Asleep",
+                    "alias": "y",
+                    "column": "y",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 0,
+            "w": 12,
+            "h": 6,
+            "i": 1,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0002",
+          "type": "metric",
+          "title": "Avg performance",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "%"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT AVG(score_sleep_performance_percentage) AS y FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_sleep\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED' AND nap = false)",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_sleep",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Performance",
+                    "alias": "y",
+                    "column": "y",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 12,
+            "y": 0,
+            "w": 12,
+            "h": 6,
+            "i": 2,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0003",
+          "type": "metric",
+          "title": "Avg efficiency",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "%"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT AVG(score_sleep_efficiency_percentage) AS y FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_sleep\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED' AND nap = false)",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_sleep",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Efficiency",
+                    "alias": "y",
+                    "column": "y",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 24,
+            "y": 0,
+            "w": 12,
+            "h": 6,
+            "i": 3,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0004",
+          "type": "metric",
+          "title": "Avg consistency",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "%"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT AVG(score_sleep_consistency_percentage) AS y FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_sleep\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED' AND nap = false)",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_sleep",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Consistency",
+                    "alias": "y",
+                    "column": "y",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 36,
+            "y": 0,
+            "w": 12,
+            "h": 6,
+            "i": 4,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0005",
+          "type": "stacked",
+          "title": "Sleep stages per night",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 2,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last",
+              "colorBySeries": [
+                {
+                  "type": "fixedColor",
+                  "value": "Deep (SWS)",
+                  "color": "#6d28d9"
+                },
+                {
+                  "type": "fixedColor",
+                  "value": "REM",
+                  "color": "#0ea5e9"
+                },
+                {
+                  "type": "fixedColor",
+                  "value": "Light",
+                  "color": "#93c5fd"
+                },
+                {
+                  "type": "fixedColor",
+                  "value": "Awake",
+                  "color": "#9ca3af"
+                }
+              ]
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "h"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT local_date, score_stage_summary_total_slow_wave_sleep_time_hours AS deep, score_stage_summary_total_rem_sleep_time_hours AS rem, score_stage_summary_total_light_sleep_time_hours AS light, score_stage_summary_total_awake_time_hours AS awake FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_sleep\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED' AND nap = false) ORDER BY local_date",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_sleep",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Day",
+                    "alias": "local_date",
+                    "column": "local_date",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Deep (SWS)",
+                    "alias": "deep",
+                    "column": "deep",
+                    "color": "#6d28d9",
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "REM",
+                    "alias": "rem",
+                    "column": "rem",
+                    "color": "#0ea5e9",
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Light",
+                    "alias": "light",
+                    "column": "light",
+                    "color": "#93c5fd",
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Awake",
+                    "alias": "awake",
+                    "column": "awake",
+                    "color": "#9ca3af",
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 6,
+            "w": 48,
+            "h": 9,
+            "i": 5,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0006",
+          "type": "line",
+          "title": "Sleep need vs actual",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 2,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last",
+              "colorBySeries": [
+                {
+                  "type": "fixedColor",
+                  "value": "Need",
+                  "color": "#3b82f6"
+                },
+                {
+                  "type": "fixedColor",
+                  "value": "Asleep",
+                  "color": "#f97316"
+                }
+              ]
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "h"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT local_date, (score_sleep_needed_baseline_hours + score_sleep_needed_need_from_sleep_debt_hours + score_sleep_needed_need_from_recent_strain_hours + score_sleep_needed_need_from_recent_nap_hours) AS need, (score_stage_summary_total_in_bed_time_hours - score_stage_summary_total_awake_time_hours) AS actual FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_sleep\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED' AND nap = false) ORDER BY local_date",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_sleep",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Day",
+                    "alias": "local_date",
+                    "column": "local_date",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Need",
+                    "alias": "need",
+                    "column": "need",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Asleep",
+                    "alias": "actual",
+                    "column": "actual",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 15,
+            "w": 24,
+            "h": 9,
+            "i": 6,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0007",
+          "type": "line",
+          "title": "Performance \u00b7 efficiency \u00b7 consistency",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last",
+              "colorBySeries": [
+                {
+                  "type": "fixedColor",
+                  "value": "Performance",
+                  "color": "#3b82f6"
+                },
+                {
+                  "type": "fixedColor",
+                  "value": "Efficiency",
+                  "color": "#f97316"
+                },
+                {
+                  "type": "fixedColor",
+                  "value": "Consistency",
+                  "color": "#10b981"
+                }
+              ]
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "%"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT local_date, score_sleep_performance_percentage AS performance, score_sleep_efficiency_percentage AS efficiency, score_sleep_consistency_percentage AS consistency FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_sleep\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED' AND nap = false) ORDER BY local_date",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_sleep",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Day",
+                    "alias": "local_date",
+                    "column": "local_date",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Performance",
+                    "alias": "performance",
+                    "column": "performance",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Efficiency",
+                    "alias": "efficiency",
+                    "column": "efficiency",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Consistency",
+                    "alias": "consistency",
+                    "column": "consistency",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 24,
+            "y": 15,
+            "w": 24,
+            "h": 9,
+            "i": 7,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0008",
+          "type": "line",
+          "title": "Respiratory rate",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 1,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "rpm"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT local_date, score_respiratory_rate AS rr FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_sleep\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED' AND nap = false) ORDER BY local_date",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_sleep",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Day",
+                    "alias": "local_date",
+                    "column": "local_date",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Breaths/min",
+                    "alias": "rr",
+                    "column": "rr",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 24,
+            "w": 24,
+            "h": 9,
+            "i": 8,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0009",
+          "type": "bar",
+          "title": "Disturbances and cycles",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last",
+              "colorBySeries": [
+                {
+                  "type": "fixedColor",
+                  "value": "Disturbances",
+                  "color": "#3b82f6"
+                },
+                {
+                  "type": "fixedColor",
+                  "value": "Sleep cycles",
+                  "color": "#f97316"
+                }
+              ]
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT local_date, score_stage_summary_disturbance_count AS disturbances, score_stage_summary_sleep_cycle_count AS cycles FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_sleep\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED' AND nap = false) ORDER BY local_date",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_sleep",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Day",
+                    "alias": "local_date",
+                    "column": "local_date",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Disturbances",
+                    "alias": "disturbances",
+                    "column": "disturbances",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Sleep cycles",
+                    "alias": "cycles",
+                    "column": "cycles",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 24,
+            "y": 24,
+            "w": 24,
+            "h": 9,
+            "i": 9,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0010",
+          "type": "table",
+          "title": "Naps",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 1,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT local_date, duration_hours AS hours, score_sleep_performance_percentage AS performance FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_sleep\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND nap = true) ORDER BY local_date DESC LIMIT 20",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_sleep",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Day",
+                    "alias": "local_date",
+                    "column": "local_date",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Hours",
+                    "alias": "hours",
+                    "column": "hours",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Performance",
+                    "alias": "performance",
+                    "column": "performance",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 33,
+            "w": 48,
+            "h": 7,
+            "i": 10,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "list": [],
+    "showDynamicFilters": false
+  },
+  "defaultDatetimeDuration": {
+    "type": "relative",
+    "relativeTimePeriod": "30d",
+    "startTime": 0,
+    "endTime": 0
+  }
+}

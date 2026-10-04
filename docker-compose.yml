@@ -1,0 +1,61 @@
+# whoop
+#
+#   docker compose up -d                       collector (uses an OpenObserve you already run)
+#   docker compose --profile o2 up -d          also start a local OpenObserve on :5080
+#   docker compose --profile webhook up -d     also expose /webhook through a public HTTPS tunnel
+#
+# The collector runs `whoopmon serve`: the 15-minute scheduler plus an HTTP server on :8080
+# with /webhook (WHOOP events), /o2-alert (OpenObserve alert destination) and /healthz.
+#
+# Run `make login` on the host first: the OAuth callback needs your browser.
+
+name: whoop
+
+x-whoopmon: &whoopmon
+  build: .
+  image: whoopmon:local
+  env_file: .env
+  environment:
+    # Inside a container, "localhost" is the container. Reach the host's OpenObserve instead.
+    O2_URL: ${O2_URL_FROM_DOCKER:-http://host.docker.internal:5080}
+    DATA_DIR: /app/data
+  volumes:
+    - ./data:/app/data
+  extra_hosts:
+    - "host.docker.internal:host-gateway"
+  restart: unless-stopped
+
+services:
+  collector:
+    <<: *whoopmon
+    command: ["serve"]
+    ports:
+      - "8080:8080"
+
+  tunnel:
+    profiles: ["webhook"]
+    image: cloudflare/cloudflared:2025.9.1
+    command: ["tunnel", "--no-autoupdate", "--url", "http://collector:8080"]
+    depends_on: [collector]
+    restart: unless-stopped
+
+  openobserve:
+    profiles: ["o2"]
+    image: public.ecr.aws/zinclabs/openobserve:latest
+    ports:
+      - "5080:5080"
+    environment:
+      ZO_ROOT_USER_EMAIL: ${O2_USER}
+      ZO_ROOT_USER_PASSWORD: ${O2_PASSWORD}
+      ZO_DATA_DIR: /data
+      # WHOOP history is older than the default 5 h ingest window.
+      ZO_INGEST_ALLOWED_UPTO: "87600"
+    volumes:
+      - o2-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:5080/healthz"]
+      interval: 10s
+      retries: 10
+
+volumes:
+  o2-data:

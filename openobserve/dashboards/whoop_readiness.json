@@ -1,0 +1,1230 @@
+{
+  "version": 5,
+  "dashboardId": "whoop_readiness",
+  "title": "WHOOP \u00b7 Readiness",
+  "description": "Recovery, HRV, resting heart rate, SpO2 and skin temperature. One point per day.",
+  "role": "",
+  "owner": "",
+  "created": "2026-10-04T20:30:48Z",
+  "tabs": [
+    {
+      "tabId": "default",
+      "name": "Default",
+      "panels": [
+        {
+          "id": "Panel_ID0001",
+          "type": "metric",
+          "title": "Recovery today",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "%"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT score_recovery_score AS y FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_recovery\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED') ORDER BY _timestamp DESC LIMIT 1",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_recovery",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Recovery",
+                    "alias": "y",
+                    "column": "y",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 0,
+            "w": 12,
+            "h": 6,
+            "i": 1,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0002",
+          "type": "metric",
+          "title": "HRV today",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "ms"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT score_hrv_rmssd_milli AS y FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_recovery\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED') ORDER BY _timestamp DESC LIMIT 1",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_recovery",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "HRV",
+                    "alias": "y",
+                    "column": "y",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 12,
+            "y": 0,
+            "w": 12,
+            "h": 6,
+            "i": 2,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0003",
+          "type": "metric",
+          "title": "Resting HR today",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "bpm"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT score_resting_heart_rate AS y FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_recovery\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED') ORDER BY _timestamp DESC LIMIT 1",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_recovery",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "RHR",
+                    "alias": "y",
+                    "column": "y",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 24,
+            "y": 0,
+            "w": 12,
+            "h": 6,
+            "i": 3,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0004",
+          "type": "metric",
+          "title": "HRV vs period mean",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 1,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "%"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT ROUND(100.0 * (MAX(CASE WHEN rk = 1 THEN score_hrv_rmssd_milli END) / AVG(score_hrv_rmssd_milli) - 1), 1) AS y FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY _timestamp DESC) AS rk FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_recovery\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED'))",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_recovery",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "\u0394 HRV",
+                    "alias": "y",
+                    "column": "y",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 36,
+            "y": 0,
+            "w": 12,
+            "h": 6,
+            "i": 4,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0005",
+          "type": "stacked",
+          "title": "Recovery %",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last",
+              "colorBySeries": [
+                {
+                  "type": "fixedColor",
+                  "value": "Red",
+                  "color": "#e5484d"
+                },
+                {
+                  "type": "fixedColor",
+                  "value": "Yellow",
+                  "color": "#f5c518"
+                },
+                {
+                  "type": "fixedColor",
+                  "value": "Green",
+                  "color": "#16a34a"
+                }
+              ]
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "%"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT local_date, CASE WHEN recovery_zone = 'red' THEN score_recovery_score ELSE 0 END AS red, CASE WHEN recovery_zone = 'yellow' THEN score_recovery_score ELSE 0 END AS yellow, CASE WHEN recovery_zone = 'green' THEN score_recovery_score ELSE 0 END AS green FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_recovery\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED') ORDER BY local_date",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_recovery",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Day",
+                    "alias": "local_date",
+                    "column": "local_date",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Red",
+                    "alias": "red",
+                    "column": "red",
+                    "color": "#e5484d",
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Yellow",
+                    "alias": "yellow",
+                    "column": "yellow",
+                    "color": "#f5c518",
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Green",
+                    "alias": "green",
+                    "column": "green",
+                    "color": "#16a34a",
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 6,
+            "w": 48,
+            "h": 9,
+            "i": 5,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0006",
+          "type": "line",
+          "title": "HRV (rMSSD)",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 1,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last",
+              "colorBySeries": [
+                {
+                  "type": "fixedColor",
+                  "value": "HRV",
+                  "color": "#3b82f6"
+                },
+                {
+                  "type": "fixedColor",
+                  "value": "7-day mean",
+                  "color": "#f97316"
+                }
+              ]
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "ms"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT local_date, score_hrv_rmssd_milli AS hrv, AVG(score_hrv_rmssd_milli) OVER (ORDER BY local_date ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS hrv_7d FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_recovery\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED') ORDER BY local_date",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_recovery",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Day",
+                    "alias": "local_date",
+                    "column": "local_date",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "HRV",
+                    "alias": "hrv",
+                    "column": "hrv",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "7-day mean",
+                    "alias": "hrv_7d",
+                    "column": "hrv_7d",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 15,
+            "w": 24,
+            "h": 9,
+            "i": 6,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0007",
+          "type": "line",
+          "title": "Resting heart rate",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "bpm"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT local_date, score_resting_heart_rate AS rhr FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_recovery\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED') ORDER BY local_date",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_recovery",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Day",
+                    "alias": "local_date",
+                    "column": "local_date",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "RHR",
+                    "alias": "rhr",
+                    "column": "rhr",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 24,
+            "y": 15,
+            "w": 24,
+            "h": 9,
+            "i": 7,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0008",
+          "type": "line",
+          "title": "Blood oxygen (SpO2)",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 1,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "%"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT local_date, score_spo2_percentage AS spo2 FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_recovery\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED') ORDER BY local_date",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_recovery",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Day",
+                    "alias": "local_date",
+                    "column": "local_date",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "SpO2",
+                    "alias": "spo2",
+                    "column": "spo2",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 24,
+            "w": 24,
+            "h": 9,
+            "i": 8,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0009",
+          "type": "line",
+          "title": "Skin temperature",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 2,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "\u00b0C"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT local_date, score_skin_temp_celsius AS temp FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_recovery\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED') ORDER BY local_date",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_recovery",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Day",
+                    "alias": "local_date",
+                    "column": "local_date",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Skin temp",
+                    "alias": "temp",
+                    "column": "temp",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 24,
+            "y": 24,
+            "w": 24,
+            "h": 9,
+            "i": 9,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0010",
+          "type": "bar",
+          "title": "Days per recovery zone",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last",
+              "colorBySeries": [
+                {
+                  "type": "fixedColor",
+                  "value": "Red",
+                  "color": "#e5484d"
+                },
+                {
+                  "type": "fixedColor",
+                  "value": "Yellow",
+                  "color": "#f5c518"
+                },
+                {
+                  "type": "fixedColor",
+                  "value": "Green",
+                  "color": "#16a34a"
+                }
+              ]
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT 'days' AS period, SUM(CASE WHEN recovery_zone = 'red' THEN 1 ELSE 0 END) AS red, SUM(CASE WHEN recovery_zone = 'yellow' THEN 1 ELSE 0 END) AS yellow, SUM(CASE WHEN recovery_zone = 'green' THEN 1 ELSE 0 END) AS green FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_recovery\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED')",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_recovery",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Period",
+                    "alias": "period",
+                    "column": "period",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Red",
+                    "alias": "red",
+                    "column": "red",
+                    "color": "#e5484d",
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Yellow",
+                    "alias": "yellow",
+                    "column": "yellow",
+                    "color": "#f5c518",
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Green",
+                    "alias": "green",
+                    "column": "green",
+                    "color": "#16a34a",
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 33,
+            "w": 16,
+            "h": 9,
+            "i": 10,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0011",
+          "type": "table",
+          "title": "Recent recoveries",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 1,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT local_date, score_recovery_score AS recovery, recovery_zone AS zone, score_hrv_rmssd_milli AS hrv_ms, score_resting_heart_rate AS rhr, score_spo2_percentage AS spo2 FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_recovery\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED') ORDER BY local_date DESC LIMIT 14",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_recovery",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Day",
+                    "alias": "local_date",
+                    "column": "local_date",
+                    "color": null,
+                    "isDerived": false
+                  },
+                  {
+                    "label": "Zone",
+                    "alias": "zone",
+                    "column": "zone",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Recovery",
+                    "alias": "recovery",
+                    "column": "recovery",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "HRV",
+                    "alias": "hrv_ms",
+                    "column": "hrv_ms",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "RHR",
+                    "alias": "rhr",
+                    "column": "rhr",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "SpO2",
+                    "alias": "spo2",
+                    "column": "spo2",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 16,
+            "y": 33,
+            "w": 32,
+            "h": 9,
+            "i": 11,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "list": [],
+    "showDynamicFilters": false
+  },
+  "defaultDatetimeDuration": {
+    "type": "relative",
+    "relativeTimePeriod": "30d",
+    "startTime": 0,
+    "endTime": 0
+  }
+}

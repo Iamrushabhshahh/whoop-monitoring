@@ -1,0 +1,825 @@
+{
+  "version": 5,
+  "dashboardId": "whoopmon_collector",
+  "title": "WHOOP \u00b7 Collector Health",
+  "description": "Health of the whoopmon collector: sync runs, shipped rows, API errors and rate limits.",
+  "role": "",
+  "owner": "",
+  "created": "2026-10-04T20:30:48Z",
+  "tabs": [
+    {
+      "tabId": "default",
+      "name": "Default",
+      "panels": [
+        {
+          "id": "Panel_ID0001",
+          "type": "metric",
+          "title": "Sync runs OK",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT COUNT(*) AS y FROM \"whoopmon_app\" WHERE body = 'sync.run.finished' AND outcome = 'success'",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoopmon_app",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Runs",
+                    "alias": "y",
+                    "column": "y",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 0,
+            "w": 12,
+            "h": 6,
+            "i": 1,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0002",
+          "type": "metric",
+          "title": "Sync runs failed",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT COUNT(*) AS y FROM \"whoopmon_app\" WHERE body = 'sync.run.finished' AND outcome = 'failure'",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoopmon_app",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Failed",
+                    "alias": "y",
+                    "column": "y",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 12,
+            "y": 0,
+            "w": 12,
+            "h": 6,
+            "i": 2,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0003",
+          "type": "metric",
+          "title": "429 rate limits",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT COUNT(*) AS y FROM \"whoopmon_app\" WHERE body = 'whoop.request.rate_limited'",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoopmon_app",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "429s",
+                    "alias": "y",
+                    "column": "y",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 24,
+            "y": 0,
+            "w": 12,
+            "h": 6,
+            "i": 3,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0004",
+          "type": "metric",
+          "title": "Errors",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT COUNT(*) AS y FROM \"whoopmon_app\" WHERE severity IN ('ERROR', 'FATAL')",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoopmon_app",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Errors",
+                    "alias": "y",
+                    "column": "y",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 36,
+            "y": 0,
+            "w": 12,
+            "h": 6,
+            "i": 4,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0005",
+          "type": "stacked",
+          "title": "Rows shipped per stream",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT histogram(_timestamp) AS t, stream, SUM(CAST(rows AS BIGINT)) AS rows FROM \"whoopmon_app\" WHERE body = 'sink.write.completed' GROUP BY t, stream ORDER BY t",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoopmon_app",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "t",
+                    "column": "t",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Rows",
+                    "alias": "rows",
+                    "column": "rows",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [
+                  {
+                    "label": "Stream",
+                    "alias": "stream",
+                    "column": "stream",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 6,
+            "w": 48,
+            "h": 9,
+            "i": 5,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0006",
+          "type": "stacked",
+          "title": "Log events by severity",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT histogram(_timestamp) AS t, severity, COUNT(*) AS n FROM \"whoopmon_app\" GROUP BY t, severity ORDER BY t",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoopmon_app",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "t",
+                    "column": "t",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Events",
+                    "alias": "n",
+                    "column": "n",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [
+                  {
+                    "label": "Severity",
+                    "alias": "severity",
+                    "column": "severity",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 15,
+            "w": 24,
+            "h": 9,
+            "i": 6,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0007",
+          "type": "line",
+          "title": "Sync run duration (ms)",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "ms"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT histogram(_timestamp) AS t, MAX(duration_ms) AS ms FROM \"whoopmon_app\" WHERE body = 'sync.run.finished' GROUP BY t ORDER BY t",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoopmon_app",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "t",
+                    "column": "t",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Duration",
+                    "alias": "ms",
+                    "column": "ms",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 24,
+            "y": 15,
+            "w": 24,
+            "h": 9,
+            "i": 7,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0008",
+          "type": "table",
+          "title": "Recent warnings and errors",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 1,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT _timestamp, severity, body, logger, run_id FROM \"whoopmon_app\" WHERE severity IN ('WARN', 'ERROR', 'FATAL') ORDER BY _timestamp DESC LIMIT 50",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoopmon_app",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Time",
+                    "alias": "_timestamp",
+                    "column": "_timestamp",
+                    "color": null,
+                    "isDerived": false
+                  },
+                  {
+                    "label": "Severity",
+                    "alias": "severity",
+                    "column": "severity",
+                    "color": null,
+                    "isDerived": false
+                  },
+                  {
+                    "label": "Event",
+                    "alias": "body",
+                    "column": "body",
+                    "color": null,
+                    "isDerived": false
+                  },
+                  {
+                    "label": "Logger",
+                    "alias": "logger",
+                    "column": "logger",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 24,
+            "w": 48,
+            "h": 9,
+            "i": 8,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "list": [],
+    "showDynamicFilters": false
+  },
+  "defaultDatetimeDuration": {
+    "type": "relative",
+    "relativeTimePeriod": "24h",
+    "startTime": 0,
+    "endTime": 0
+  }
+}

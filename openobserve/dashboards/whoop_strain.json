@@ -1,0 +1,1095 @@
+{
+  "version": 5,
+  "dashboardId": "whoop_strain",
+  "title": "WHOOP \u00b7 Strain & Training",
+  "description": "Day strain, steps, energy and workouts with heart-rate zones.",
+  "role": "",
+  "owner": "",
+  "created": "2026-10-04T20:30:48Z",
+  "tabs": [
+    {
+      "tabId": "default",
+      "name": "Default",
+      "panels": [
+        {
+          "id": "Panel_ID0001",
+          "type": "metric",
+          "title": "Avg day strain",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 1,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT AVG(score_strain) AS y FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_cycle\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED')",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_cycle",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Strain",
+                    "alias": "y",
+                    "column": "y",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 0,
+            "w": 12,
+            "h": 6,
+            "i": 1,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0002",
+          "type": "metric",
+          "title": "Avg steps / day",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT AVG(step_count) AS y FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_cycle\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED') WHERE step_count IS NOT NULL",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_cycle",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Steps",
+                    "alias": "y",
+                    "column": "y",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 12,
+            "y": 0,
+            "w": 12,
+            "h": 6,
+            "i": 2,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0003",
+          "type": "metric",
+          "title": "Workouts",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT COUNT(*) AS y FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_workout\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED')",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_workout",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Workouts",
+                    "alias": "y",
+                    "column": "y",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 24,
+            "y": 0,
+            "w": 12,
+            "h": 6,
+            "i": 3,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0004",
+          "type": "metric",
+          "title": "Training hours",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 1,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            },
+            "unit": "custom",
+            "unit_custom": "h"
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT SUM(duration_hours) AS y FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_workout\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED')",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_workout",
+                "stream_type": "logs",
+                "x": [],
+                "y": [
+                  {
+                    "label": "Hours",
+                    "alias": "y",
+                    "column": "y",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 36,
+            "y": 0,
+            "w": 12,
+            "h": 6,
+            "i": 4,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0005",
+          "type": "bar",
+          "title": "Day strain (0\u201321)",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 1,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT local_date, score_strain AS strain FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_cycle\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED') ORDER BY local_date",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_cycle",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Day",
+                    "alias": "local_date",
+                    "column": "local_date",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Strain",
+                    "alias": "strain",
+                    "column": "strain",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 6,
+            "w": 48,
+            "h": 9,
+            "i": 5,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0006",
+          "type": "bar",
+          "title": "Steps",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT local_date, step_count AS steps FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_cycle\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED') WHERE step_count IS NOT NULL ORDER BY local_date",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_cycle",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Day",
+                    "alias": "local_date",
+                    "column": "local_date",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Steps",
+                    "alias": "steps",
+                    "column": "steps",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 15,
+            "w": 24,
+            "h": 9,
+            "i": 6,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0007",
+          "type": "line",
+          "title": "Energy burned (kcal)",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT local_date, score_kilojoule / 4.184 AS kcal FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_cycle\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED') ORDER BY local_date",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_cycle",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Day",
+                    "alias": "local_date",
+                    "column": "local_date",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "kcal",
+                    "alias": "kcal",
+                    "column": "kcal",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 24,
+            "y": 15,
+            "w": 24,
+            "h": 9,
+            "i": 7,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0008",
+          "type": "stacked",
+          "title": "Heart-rate zone time per week (min)",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last",
+              "colorBySeries": [
+                {
+                  "type": "fixedColor",
+                  "value": "Zone 1",
+                  "color": "#3b82f6"
+                },
+                {
+                  "type": "fixedColor",
+                  "value": "Zone 2",
+                  "color": "#f97316"
+                },
+                {
+                  "type": "fixedColor",
+                  "value": "Zone 3",
+                  "color": "#10b981"
+                },
+                {
+                  "type": "fixedColor",
+                  "value": "Zone 4",
+                  "color": "#e11d48"
+                },
+                {
+                  "type": "fixedColor",
+                  "value": "Zone 5",
+                  "color": "#a855f7"
+                }
+              ]
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT date_trunc('week', to_timestamp_micros(_timestamp)) AS week, SUM(score_zone_durations_zone_one_milli) / 60000 AS z1, SUM(score_zone_durations_zone_two_milli) / 60000 AS z2, SUM(score_zone_durations_zone_three_milli) / 60000 AS z3, SUM(score_zone_durations_zone_four_milli) / 60000 AS z4, SUM(score_zone_durations_zone_five_milli) / 60000 AS z5 FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_workout\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED') GROUP BY week ORDER BY week",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_workout",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Week",
+                    "alias": "week",
+                    "column": "week",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Zone 1",
+                    "alias": "z1",
+                    "column": "z1",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Zone 2",
+                    "alias": "z2",
+                    "column": "z2",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Zone 3",
+                    "alias": "z3",
+                    "column": "z3",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Zone 4",
+                    "alias": "z4",
+                    "column": "z4",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Zone 5",
+                    "alias": "z5",
+                    "column": "z5",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 24,
+            "w": 24,
+            "h": 9,
+            "i": 8,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0009",
+          "type": "pie",
+          "title": "Sport mix",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 0,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT sport_name, COUNT(*) AS n FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_workout\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED') GROUP BY sport_name ORDER BY n DESC",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_workout",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Sport",
+                    "alias": "sport_name",
+                    "column": "sport_name",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Workouts",
+                    "alias": "n",
+                    "column": "n",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 24,
+            "y": 24,
+            "w": 16,
+            "h": 9,
+            "i": 9,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        },
+        {
+          "id": "Panel_ID0010",
+          "type": "table",
+          "title": "Recent workouts",
+          "description": "",
+          "config": {
+            "show_legends": true,
+            "legends_position": "bottom",
+            "decimals": 1,
+            "line_thickness": 1.5,
+            "show_symbol": true,
+            "line_interpolation": "smooth",
+            "connect_nulls": true,
+            "no_value_replacement": "",
+            "wrap_table_cells": false,
+            "table_transpose": false,
+            "table_dynamic_columns": false,
+            "axis_border_show": false,
+            "top_results_others": false,
+            "label_option": {
+              "rotate": 0
+            },
+            "legend_width": {
+              "unit": "px"
+            },
+            "drilldown": [],
+            "mark_line": [],
+            "override_config": [],
+            "mappings": [],
+            "color": {
+              "mode": "palette-classic-by-series",
+              "fixedColor": [
+                "#53ca53"
+              ],
+              "seriesBy": "last"
+            },
+            "trellis": {
+              "layout": null,
+              "num_of_columns": 1
+            }
+          },
+          "queryType": "sql",
+          "queries": [
+            {
+              "query": "SELECT local_date, sport_name, score_strain AS strain, duration_hours AS hours, score_average_heart_rate AS avg_hr, score_max_heart_rate AS max_hr, score_kilojoule / 4.184 AS kcal FROM (SELECT * FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY record_id ORDER BY updated_at DESC) AS rn FROM \"whoop_workout\") WHERE rn = 1 AND (deleted IS NULL OR deleted = false) AND score_state = 'SCORED') ORDER BY _timestamp DESC LIMIT 20",
+              "vrlFunctionQuery": "",
+              "customQuery": true,
+              "fields": {
+                "stream": "whoop_workout",
+                "stream_type": "logs",
+                "x": [
+                  {
+                    "label": "Day",
+                    "alias": "local_date",
+                    "column": "local_date",
+                    "color": null,
+                    "isDerived": false
+                  },
+                  {
+                    "label": "Sport",
+                    "alias": "sport_name",
+                    "column": "sport_name",
+                    "color": null,
+                    "isDerived": false
+                  }
+                ],
+                "y": [
+                  {
+                    "label": "Strain",
+                    "alias": "strain",
+                    "column": "strain",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Hours",
+                    "alias": "hours",
+                    "column": "hours",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Avg HR",
+                    "alias": "avg_hr",
+                    "column": "avg_hr",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "Max HR",
+                    "alias": "max_hr",
+                    "column": "max_hr",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  },
+                  {
+                    "label": "kcal",
+                    "alias": "kcal",
+                    "column": "kcal",
+                    "color": null,
+                    "isDerived": false,
+                    "aggregationFunction": "max"
+                  }
+                ],
+                "z": [],
+                "breakdown": [],
+                "filter": {
+                  "filterType": "group",
+                  "logicalOperator": "AND",
+                  "conditions": []
+                }
+              },
+              "config": {
+                "promql_legend": "",
+                "layer_type": "scatter",
+                "weight_fixed": 1,
+                "limit": 0,
+                "min": 0,
+                "max": 100,
+                "time_shift": []
+              }
+            }
+          ],
+          "layout": {
+            "x": 0,
+            "y": 33,
+            "w": 32,
+            "h": 9,
+            "i": 10,
+            "moved": false
+          },
+          "htmlContent": "",
+          "markdownContent": "",
+          "customChartContent": ""
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "list": [],
+    "showDynamicFilters": false
+  },
+  "defaultDatetimeDuration": {
+    "type": "relative",
+    "relativeTimePeriod": "30d",
+    "startTime": 0,
+    "endTime": 0
+  }
+}

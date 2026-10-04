@@ -1,0 +1,34 @@
+{
+  "name": "whoopmon_sync_failed",
+  "org_id": "default",
+  "description": "A sync run failed. Check the Collector Health dashboard.",
+  "stream_type": "logs",
+  "stream_name": "whoopmon_app",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "sql": "SELECT run_id FROM \"whoopmon_app\" WHERE body = 'sync.run.finished' AND outcome = 'failure'",
+    "conditions": null,
+    "vrl_function": null
+  },
+  "trigger_condition": {
+    "period": 15,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 15,
+    "frequency_type": "minutes",
+    "silence": 60,
+    "cron": "",
+    "align_time": false
+  },
+  "destinations": [
+    "whoopmon_webhook"
+  ],
+  "enabled": true,
+  "tz_offset": 0,
+  "row_template": "",
+  "tags": [
+    "whoop"
+  ],
+  "creates_incident": false
+}

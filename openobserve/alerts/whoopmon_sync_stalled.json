@@ -1,0 +1,34 @@
+{
+  "name": "whoopmon_sync_stalled",
+  "org_id": "default",
+  "description": "No successful sync run in the last 60 minutes.",
+  "stream_type": "logs",
+  "stream_name": "whoopmon_app",
+  "is_real_time": false,
+  "query_condition": {
+    "type": "sql",
+    "sql": "SELECT COUNT(*) AS runs FROM \"whoopmon_app\" WHERE body = 'sync.run.finished' AND outcome = 'success' HAVING COUNT(*) = 0",
+    "conditions": null,
+    "vrl_function": null
+  },
+  "trigger_condition": {
+    "period": 60,
+    "operator": ">=",
+    "threshold": 1,
+    "frequency": 30,
+    "frequency_type": "minutes",
+    "silence": 120,
+    "cron": "",
+    "align_time": false
+  },
+  "destinations": [
+    "whoopmon_webhook"
+  ],
+  "enabled": true,
+  "tz_offset": 0,
+  "row_template": "",
+  "tags": [
+    "whoop"
+  ],
+  "creates_incident": false
+}
