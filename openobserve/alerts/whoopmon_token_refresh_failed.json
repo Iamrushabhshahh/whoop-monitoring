@@ -7,7 +7,7 @@
   "is_real_time": false,
   "query_condition": {
     "type": "sql",
-    "sql": "SELECT error FROM \"whoopmon_app\" WHERE body = 'auth.token.refresh_failed'",
+    "sql": "SELECT COUNT(*) AS failures FROM \"whoopmon_app\" WHERE body = 'auth.token.refresh_failed' HAVING COUNT(*) >= 1",
     "conditions": null,
     "vrl_function": null
   },

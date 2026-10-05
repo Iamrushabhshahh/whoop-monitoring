@@ -122,7 +122,10 @@ def build_alerts(prefix: str, org: str) -> list[dict[str, Any]]:
             "whoopmon_token_refresh_failed",
             "WHOOP token refresh failed. Run `whoopmon auth login` again.",
             app,
-            f"SELECT error FROM \"{app}\" WHERE body = 'auth.token.refresh_failed'",
+            # COUNT(*) only: naming a column such as `error` fails until the first refresh
+            # failure has created that column in the stream.
+            f"SELECT COUNT(*) AS failures FROM \"{app}\" WHERE body = 'auth.token.refresh_failed' "
+            "HAVING COUNT(*) >= 1",
             org,
             period_min=15,
             frequency_min=15,
