@@ -9,9 +9,10 @@ Do these steps in sequence. Each step tells you how to check that it worked.
 | Python 3.12 or later | `python3 --version` |
 | Docker Desktop | `docker ps` |
 | OpenObserve on `:5080` | `curl -s localhost:5080/healthz` gives `{"status":"ok"}` |
+| Tested with | OpenObserve v1.0.4 (also worked on v0.92.2) |
 | WHOOP membership | You can sign in at <https://app.whoop.com> |
 
-No OpenObserve yet? Run `docker compose --profile o2 up -d openobserve`.
+No OpenObserve yet? The easiest way is [openobserve-playground](https://github.com/Iamrushabhshahh/openobserve-playground), which is already set up for this collector. Or run `docker compose --profile o2 up -d openobserve`.
 
 ### OpenObserve settings
 

@@ -41,7 +41,7 @@ services:
 
   openobserve:
     profiles: ["o2"]
-    image: public.ecr.aws/zinclabs/openobserve:latest
+    image: public.ecr.aws/zinclabs/openobserve:v1.0.4   # pinned; see SETUP.md
     ports:
       - "5080:5080"
     environment:
