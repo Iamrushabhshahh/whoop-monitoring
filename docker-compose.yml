@@ -30,12 +30,13 @@ services:
     <<: *whoopmon
     command: ["serve"]
     ports:
-      - "8080:8080"
+      # Change WEBHOOK_PORT in .env if 8080 is taken (and use it in ALERT_WEBHOOK_URL too).
+      - "${WEBHOOK_PORT:-8080}:${WEBHOOK_PORT:-8080}"
 
   tunnel:
     profiles: ["webhook"]
     image: cloudflare/cloudflared:2025.9.1
-    command: ["tunnel", "--no-autoupdate", "--url", "http://collector:8080"]
+    command: ["tunnel", "--no-autoupdate", "--url", "http://collector:${WEBHOOK_PORT:-8080}"]
     depends_on: [collector]
     restart: unless-stopped
 
