@@ -1,6 +1,6 @@
 [project]
 name = "whoopmon"
-version = "1.0.0"
+version = "1.0.1"
 description = "Collect WHOOP API v2 data and ship it to OpenObserve."
 readme = "README.md"
 requires-python = ">=3.12"

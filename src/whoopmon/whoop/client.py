@@ -91,7 +91,10 @@ class WhoopClient:
                     continue
 
                 duration_ms = (time.monotonic() - started) * 1000
-                attrs = {"route": path.split("/{")[0], "status": resp.status_code}
+                attrs: dict[str, str | int] = {
+                    "route": path.split("/{")[0],
+                    "status": resp.status_code,
+                }
                 api_requests.add(1, attrs)
                 api_latency.record(duration_ms, attrs)
                 remaining = resp.headers.get("X-RateLimit-Remaining")

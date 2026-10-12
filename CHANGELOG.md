@@ -4,6 +4,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions follo
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-13
+
+### Fixed
+- Type the metric attributes in the WHOOP client so mypy passes with OpenTelemetry 1.45.
+
 ## [1.0.0] - 2026-10-13
 
 ### Added
