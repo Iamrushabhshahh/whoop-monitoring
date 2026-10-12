@@ -105,8 +105,7 @@ id, so a dashboard error leads to the log line and then to the trace. The schema
 
 ## Plan vs as built
 
-The [design blueprint](https://claude.ai/artifact/BcXREg7aq1MptzmCFhrhJ3) (v0.1) was written
-before the build. These are the places where the code chose differently, and why.
+The design blueprint (v0.1) was written before the build. These are the places where the code chose differently, and why.
 
 | Plan (v0.1) | As built (v1.0) | Why |
 |---|---|---|
