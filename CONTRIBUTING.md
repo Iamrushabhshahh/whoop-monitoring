@@ -9,3 +9,13 @@
 6. Record a design change as a new ADR in `docs/adr/`.
 
 Commit messages: imperative mood, max 72 characters in the first line.
+
+Integration tests run every dashboard and alert query against a real OpenObserve:
+`make test-integration` (needs OpenObserve on `:5080` with some WHOOP data).
+
+Pull requests: one topic per PR, fill in the template, and add a line to
+[CHANGELOG.md](CHANGELOG.md) under **Unreleased**. Never commit `.env`, `data/`, tokens or real
+health data; fixtures in `tests/fixtures/` are made up.
+
+By contributing you agree that your work is released under the [MIT License](LICENSE), and you
+follow the [Code of Conduct](CODE_OF_CONDUCT.md).

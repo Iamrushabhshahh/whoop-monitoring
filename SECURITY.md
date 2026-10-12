@@ -19,6 +19,16 @@
   `trace_id` de-duplication.
 - The container runs as a non-root user.
 
-## Reporting
+## Reporting a vulnerability
 
-Open a private security advisory on the GitHub repository.
+Please **do not** open a public issue. Use GitHub's
+[private vulnerability reporting](https://github.com/Iamrushabhshahh/whoop-monitoring/security/advisories/new),
+or email **rushabhshah842@gmail.com**. You will get a reply within 7 days, and a fix or a plan
+within 30 days for confirmed issues.
+
+## Supported versions
+
+| Version | Supported |
+|---|---|
+| 1.x | Yes |
+| 0.x | No, upgrade to 1.x |

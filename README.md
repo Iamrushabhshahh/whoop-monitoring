@@ -1,5 +1,10 @@
 # whoop-monitoring
 
+[![ci](https://github.com/Iamrushabhshahh/whoop-monitoring/actions/workflows/ci.yml/badge.svg)](https://github.com/Iamrushabhshahh/whoop-monitoring/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-3776ab.svg)
+[![OpenObserve v1.0.4](https://img.shields.io/badge/OpenObserve-v1.0.4-6155f5.svg)](https://openobserve.ai)
+
 Collect your WHOOP data and see it in OpenObserve.
 
 `whoopmon` reads the WHOOP Developer API v2. It writes recovery, sleep, strain, workouts and
@@ -14,6 +19,18 @@ flowchart LR
   C -.->|"OTLP logs · metrics · traces"| O
   O --> D["4 dashboards · 5 alerts"]
 ```
+
+![WHOOP Readiness dashboard (made-up data)](docs/images/whoop-readiness.jpg)
+
+## Who this is for
+
+You own a WHOOP band, you like your data on your own machine, and you want it next to the rest
+of your telemetry in OpenObserve. You need a WHOOP membership and a free WHOOP developer app;
+setup takes about 15 minutes, most of it creating that app.
+
+No OpenObserve yet? The easiest start is
+[openobserve-playground](https://github.com/Iamrushabhshahh/openobserve-playground)
+(`make quickstart`), which this collector plugs into.
 
 ## Quick start
 
@@ -40,6 +57,12 @@ Full procedure, including the WHOOP developer app: [SETUP.md](SETUP.md).
 | WHOOP · Sleep | Stages per night, need vs actual, performance/efficiency/consistency, respiratory rate, naps |
 | WHOOP · Strain & Training | Day strain, steps, kcal, HR-zone minutes per week, sport mix, workouts |
 | WHOOP · Collector Health | Sync runs, rows shipped, 429s, errors, run duration |
+
+| Sleep | Strain & Training |
+|---|---|
+| ![Sleep dashboard](docs/images/whoop-sleep.jpg) | ![Strain dashboard](docs/images/whoop-strain.jpg) |
+
+All screenshots use made-up data.
 
 | Alert | Fires when |
 |---|---|
@@ -72,6 +95,17 @@ make test-integration   run every dashboard/alert query on the local OpenObserve
 | [docs/runbook.md](docs/runbook.md) | What to do when something breaks |
 | [docs/adr/](docs/adr) | Architecture decision records |
 | [SECURITY.md](SECURITY.md) · [PRIVACY.md](PRIVACY.md) | Secrets, tokens, personal data |
+
+## Contributing
+
+Issues and pull requests are welcome: start with [CONTRIBUTING.md](CONTRIBUTING.md). Questions
+go to [SUPPORT.md](SUPPORT.md), security reports to [SECURITY.md](SECURITY.md), and everyone
+follows the [Code of Conduct](CODE_OF_CONDUCT.md). Releases are listed in
+[CHANGELOG.md](CHANGELOG.md). Maintained by [Rushabh Shah](MAINTAINERS.md).
+
+## License
+
+[MIT](LICENSE) © 2026 Rushabh Shah.
 
 ## Disclaimer
 
