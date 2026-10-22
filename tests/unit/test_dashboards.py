@@ -4,7 +4,7 @@ from whoopmon.provision.dashboards import build_all
 
 def test_dashboards_fit_the_grid_and_have_unique_ids():
     dashboards = build_all()
-    assert len(dashboards) == 4
+    assert len(dashboards) == 5
     for dash in dashboards:
         panels = dash["tabs"][0]["panels"]
         assert len({p["id"] for p in panels}) == len(panels)
@@ -14,7 +14,7 @@ def test_dashboards_fit_the_grid_and_have_unique_ids():
 
 
 def test_health_queries_use_latest_version():
-    for dash in build_all()[:3]:
+    for dash in build_all()[:4]:
         for p in dash["tabs"][0]["panels"]:
             assert "ROW_NUMBER()" in p["queries"][0]["query"], p["title"]
 

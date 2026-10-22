@@ -17,7 +17,7 @@ flowchart LR
   W -.->|"webhooks (optional)"| C
   C -->|"_json ingest"| O["OpenObserve streams<br/>whoop_cycle · whoop_recovery<br/>whoop_sleep · whoop_workout · whoop_body"]
   C -.->|"OTLP logs · metrics · traces"| O
-  O --> D["4 dashboards · 5 alerts"]
+  O --> D["5 dashboards · 5 alerts"]
 ```
 
 ![WHOOP Readiness dashboard (made-up data)](docs/images/whoop-readiness.jpg)
@@ -53,6 +53,7 @@ Full procedure, including the WHOOP developer app: [SETUP.md](SETUP.md).
 
 | Dashboard | Shows |
 |---|---|
+| WHOOP · Overview | Latest recovery, HRV, resting HR and main sleep; 7-day averages; daily trends; last 7 days |
 | WHOOP · Readiness | Recovery %, zone, HRV with 7-day mean, resting HR, SpO2, skin temp |
 | WHOOP · Sleep | Stages per night, need vs actual, performance/efficiency/consistency, respiratory rate, naps |
 | WHOOP · Strain & Training | Day strain, steps, kcal, HR-zone minutes per week, sport mix, workouts |
