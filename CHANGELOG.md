@@ -4,6 +4,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versions follo
 
 ## [Unreleased]
 
+### Added
+- WHOOP · Overview dashboard: latest scored recovery, HRV, resting HR and main sleep, 7-day
+  averages, daily trends and a last-7-days table. `make provision` now creates 5 dashboards.
+
+### Changed
+- Strain & Training: Sport mix sits beside the heart-rate zones, and Recent workouts spans the
+  full width.
+
 ## [1.0.1] - 2026-10-13
 
 ### Fixed
