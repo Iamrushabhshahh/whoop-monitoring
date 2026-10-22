@@ -585,7 +585,6 @@ def strain(prefix: str) -> dict[str, Any]:
                 w,
                 x=[("sport_name", "Sport")],
                 y=[("n", "Workouts")],
-                w=64,
                 decimals=0,
             ),
             Panel(
@@ -606,7 +605,164 @@ def strain(prefix: str) -> dict[str, Any]:
                     ("max_hr", "Max HR"),
                     ("kcal", "kcal"),
                 ],
-                w=128,
+                w=192,
+            ),
+        ],
+    )
+
+
+# -- Overview -----------------------------------------------------------------
+
+
+def overview(prefix: str) -> dict[str, Any]:
+    r, c, s = f"{prefix}recovery", f"{prefix}cycle", f"{prefix}sleep"
+    rec = latest(r, "score_state = 'SCORED'")
+    cyc = latest(c, "score_state = 'SCORED'")
+    night = latest(s, "score_state = 'SCORED' AND nap = false")
+    asleep = (
+        "score_stage_summary_total_in_bed_time_hours - score_stage_summary_total_awake_time_hours"
+    )
+    # Join on WHOOP ids, not local_date: one day can hold two cycles.
+    daily = (
+        f"SELECT r.local_date AS local_date, r.score_recovery_score AS recovery, "
+        f"c.score_strain AS strain, s.{asleep.replace(' - ', ' - s.')} AS sleep_h, "
+        f"r.score_hrv_rmssd_milli AS hrv, r.score_resting_heart_rate AS rhr, "
+        f"c.step_count AS steps FROM {rec} r "
+        f"LEFT JOIN {cyc} c ON r.record_id = c.record_id "
+        f"LEFT JOIN {night} s ON r.sleep_id = s.record_id"
+    )
+
+    def tile(title: str, sql: str, stream: str, unit: str | None, decimals: int) -> Panel:
+        return Panel(
+            title, "metric", sql, stream, y=[("y", title)], w=48, h=6, unit=unit, decimals=decimals
+        )
+
+    return dashboard(
+        "whoop_overview",
+        "WHOOP · Overview",
+        "Latest scored values, 7-day averages and daily trends. WHOOP only scores recovery "
+        "after a main sleep, not a nap.",
+        [
+            tile(
+                "Recovery (latest)",
+                f"SELECT score_recovery_score AS y FROM {rec} ORDER BY _timestamp DESC LIMIT 1",
+                r,
+                "%",
+                0,
+            ),
+            tile(
+                "HRV (latest)",
+                f"SELECT score_hrv_rmssd_milli AS y FROM {rec} ORDER BY _timestamp DESC LIMIT 1",
+                r,
+                " ms",
+                0,
+            ),
+            tile(
+                "Resting HR (latest)",
+                f"SELECT score_resting_heart_rate AS y FROM {rec} ORDER BY _timestamp DESC LIMIT 1",
+                r,
+                " bpm",
+                0,
+            ),
+            tile(
+                "Last main sleep",
+                f"SELECT {asleep} AS y FROM {night} ORDER BY _timestamp DESC LIMIT 1",
+                s,
+                " h",
+                1,
+            ),
+            tile(
+                "Recovery · 7-day avg",
+                f"SELECT AVG(score_recovery_score) AS y FROM "
+                f"(SELECT score_recovery_score FROM {rec} ORDER BY local_date DESC LIMIT 7)",
+                r,
+                "%",
+                0,
+            ),
+            tile(
+                "Sleep · 7-day avg (h)",
+                f"SELECT AVG(h) AS y FROM "
+                f"(SELECT {asleep} AS h FROM {night} ORDER BY local_date DESC LIMIT 7)",
+                s,
+                " h",
+                1,
+            ),
+            tile(
+                "Strain · 7-day avg",
+                f"SELECT AVG(score_strain) AS y FROM "
+                f"(SELECT score_strain FROM {cyc} ORDER BY local_date DESC LIMIT 7)",
+                c,
+                None,
+                1,
+            ),
+            tile(
+                "Green days (period)",
+                f"SELECT COUNT(*) AS y FROM {rec} WHERE recovery_zone = 'green'",
+                r,
+                " days",
+                0,
+            ),
+            Panel(
+                "Recovery % per day",
+                "line",
+                f"SELECT local_date, recovery FROM ({daily}) ORDER BY local_date",
+                r,
+                x=[_day()],
+                y=[("recovery", "Recovery %")],
+                colors={"recovery": "#22c55e"},
+            ),
+            Panel(
+                "Day strain (0–21)",
+                "line",
+                f"SELECT local_date, strain FROM ({daily}) WHERE strain IS NOT NULL "
+                f"ORDER BY local_date",
+                r,
+                x=[_day()],
+                y=[("strain", "Day strain")],
+                colors={"strain": "#f97316"},
+            ),
+            Panel(
+                "Sleep hours per night",
+                "line",
+                f"SELECT local_date, sleep_h FROM ({daily}) WHERE sleep_h IS NOT NULL "
+                f"ORDER BY local_date",
+                r,
+                x=[_day()],
+                y=[("sleep_h", "Sleep (h)")],
+                colors={"sleep_h": "#6366f1"},
+            ),
+            Panel(
+                "HRV and resting HR",
+                "line",
+                f"SELECT local_date, hrv, rhr FROM ({daily}) ORDER BY local_date",
+                r,
+                x=[_day()],
+                y=[("hrv", "HRV (ms)"), ("rhr", "Resting HR (bpm)")],
+            ),
+            Panel(
+                "Last 7 days",
+                "table",
+                # Cast to text so whole numbers don't render as 41.0 next to 67.9.
+                f'SELECT local_date AS "Day", '
+                f'CAST(CAST(recovery AS BIGINT) AS VARCHAR) AS "Recovery %", '
+                f'CAST(ROUND(hrv, 1) AS VARCHAR) AS "HRV (ms)", '
+                f'CAST(CAST(rhr AS BIGINT) AS VARCHAR) AS "Resting HR", '
+                f'CAST(ROUND(sleep_h, 1) AS VARCHAR) AS "Sleep (h)", '
+                f'CAST(ROUND(strain, 1) AS VARCHAR) AS "Strain", '
+                f'CAST(CAST(steps AS BIGINT) AS VARCHAR) AS "Steps" '
+                f"FROM ({daily}) ORDER BY local_date DESC LIMIT 7",
+                r,
+                x=[
+                    ("Day", "Day"),
+                    ("Recovery %", "Recovery %"),
+                    ("HRV (ms)", "HRV (ms)"),
+                    ("Resting HR", "Resting HR"),
+                    ("Sleep (h)", "Sleep (h)"),
+                    ("Strain", "Strain"),
+                    ("Steps", "Steps"),
+                ],
+                w=192,
+                decimals=0,
             ),
         ],
     )
@@ -721,4 +877,4 @@ def collector() -> dict[str, Any]:
 
 
 def build_all(prefix: str = "whoop_") -> list[dict[str, Any]]:
-    return [readiness(prefix), sleep(prefix), strain(prefix), collector()]
+    return [overview(prefix), readiness(prefix), sleep(prefix), strain(prefix), collector()]
